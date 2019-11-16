@@ -1,0 +1,14 @@
+{
+  "name": "common-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "keywords": [],
+  "author": "ovaphlow@live.com",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^8.0.2",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1"
+  }
+}
