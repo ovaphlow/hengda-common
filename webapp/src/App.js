@@ -6,6 +6,7 @@ import Home from './Home'
 import { List as DeptList, Save as DeptSave, Update as DeptUpdate } from './Dept'
 import { List as UserList, Save as UserSave, Update as UserUpdate } from './User'
 import { List as ModelList, Save as ModelSave, Update as ModelUpdate } from './Model'
+import { List as TrainList, Save as TrainSave, Update as TrainUpdate } from './Train'
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
               <Route exact path="/车型"><ModelList /></Route>
               <Route path="/车型/新增"><ModelSave /></Route>
               <Route path="/车型/:id"><ModelUpdate /></Route>
+
+              <Route exact path="/车组"><TrainList /></Route>
+              <Route path="/车组/新增"><TrainSave /></Route>
+              <Route path="/车组/:id"><TrainUpdate /></Route>
             </Switch>
           </div>
         </div>

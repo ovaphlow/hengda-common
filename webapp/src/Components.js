@@ -102,3 +102,37 @@ export function DeptPicker(props) {
     </div>
   )
 }
+
+export function ModelPicker(props) {
+  const [data, setData] = React.useState([])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`/api/common/model/`)
+      const result = await response.json()
+      if (result.message) {
+        window.alert(result.message)
+        return
+      }
+      setData(result.content)
+    }
+    fetchData()
+  }, [])
+
+  return (
+    <div className="form-group">
+      <label>车型</label>
+      <select name={props.name || 'model_id'} value={props.value || ''}
+          className="form-control"
+          onChange={props.onChange}
+      >
+        <option value="0">未选择</option>
+        {
+          data.map(it => (
+            <option value={it.id} key={it.id}>{it.v}</option>
+          ))
+        }
+      </select>
+    </div>
+  )
+}
