@@ -57,7 +57,7 @@ export function Sidebar() {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#车组">
+              <a className="nav-link" href="#车次">
                 <i className="fa fa-fw fa-anchor"></i>
                 车次
               </a>

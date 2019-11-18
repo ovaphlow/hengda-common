@@ -42,4 +42,8 @@ const trainRouter = require('./routes/train')
 app.use(trainRouter.routes())
 app.use(trainRouter.allowedMethods())
 
+const routeRouter = require('./routes/route')
+app.use(routeRouter.routes())
+app.use(routeRouter.allowedMethods())
+
 module.exports = app
