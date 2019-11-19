@@ -3,6 +3,8 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 
 import { Navbar, Sidebar } from './Components'
 import Home from './Home'
+import SignIn from './SignIn'
+import { CurrentUser, ChangePassword } from './CurrentUser'
 import { List as DeptList, Save as DeptSave, Update as DeptUpdate } from './Dept'
 import { List as UserList, Save as UserSave, Update as UserUpdate } from './User'
 import { List as ModelList, Save as ModelSave, Update as ModelUpdate } from './Model'
@@ -10,6 +12,14 @@ import { List as TrainList, Save as TrainSave, Update as TrainUpdate } from './T
 import { List as RouteList, Save as RouteSave, Update as RouteUpdate } from './Route'
 
 function App() {
+  React.useEffect(() => {
+    const auth = JSON.parse(sessionStorage.getItem('auth_super'))
+    if (!!!auth) {
+      window.location = '#登录'
+      return
+    }
+  }, [])
+
   return (
     <Router>
       <div className="container-fluid">
@@ -21,6 +31,10 @@ function App() {
           <div className="col-md-9 col-lg-10 ml-sm-auto">
             <Switch>
               <Route exact path="/"><Home /></Route>
+
+              <Route path="/登录"><SignIn /></Route>
+              <Route path="/当前用户"><CurrentUser /></Route>
+              <Route path="/修改密码"><ChangePassword /></Route>
 
               <Route exact path="/部门结构"><DeptList /></Route>
               <Route path="/部门结构/新增"><DeptSave /></Route>

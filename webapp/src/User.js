@@ -66,21 +66,6 @@ function Form(props) {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-4 col-lg-3">
-          <div className="form-group">
-            <label>权限：管理员</label>
-            <select name="super" value={props.item.super || '0'}
-                className="form-control"
-                onChange={props.handleChange}
-            >
-              <option value="0">否</option>
-              <option value="1">是</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
       <div className="form-group">
         <label>备注</label>
         <input type="text" name="remark" value={props.item.remark || ''}
@@ -160,7 +145,6 @@ export function Save() {
     password: md5('1234'),
     phone: '',
     master_id: '0',
-    super: '0',
     remark: ''
   })
 

@@ -8,6 +8,56 @@ const router = new Router({
 
 router
   .post('/sign-in/super', async ctx => {
+    const client = await postgres.connect()
+    try {
+      const sql = `
+        select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super,
+          (select v from public.common_data where id = u.master_id) as dept
+        from public.user as u
+        where username = $1 and password = $2 and auth_super = 1
+      `
+      const result = await client.query(sql, [
+        ctx.request.body.username,
+        ctx.request.body.password
+      ])
+      if (result.rows.length === 1) {
+        ctx.response.body = {message: '', content: result.rows[0]}
+      } else {
+        ctx.response.body = {message: '用户名或密码错误'}
+      }
+    } catch (err) {
+      console.error(err.stack)
+      ctx.response.body = {message: '服务器错误'}
+    } finally {
+      client.release()
+    }
+  })
+
+router
+  .put('/password', async ctx => {
+    const client = await postgres.connect()
+    try {
+      let sql = `
+        select password from public.user where id = $1 limit 1
+      `
+      const result = await client.query(sql, [ctx.request.body.id])
+      if (result.rows[0].password !== ctx.request.body.password) {
+        ctx.response.body = {message: '原密码输入错误'}
+        return
+      }
+      sql = `
+        update public.user
+        set password = $1
+        where id = $2
+      `
+      await client.query(sql, [ctx.request.body.password1, ctx.request.body.id])
+      ctx.response.body = {message: '', content: ''}
+    } catch (err) {
+      console.error(err.stack)
+      ctx.response.body = {message: '服务器错误'}
+    } finally {
+      client.release()
+    }
   })
 
 router
@@ -15,8 +65,7 @@ router
     const client = await postgres.connect()
     try {
       const sql = `
-        select u.id, u.master_id, u.username, u.name, u.phone, u.remark,
-          (select super from cheliangduan.auth as a where a.master_id = u.id) as super,
+        select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super as super,
           (select v from public.common_data where id = u.master_id) as dept
         from public.user as u
         order by id desc
@@ -67,8 +116,7 @@ router
     const client = await postgres.connect()
     try {
       const sql = `
-        select u.id, u.master_id, u.username, u.name, u.phone, u.remark,
-          (select super from cheliangduan.auth where master_id = u.id) as super,
+        select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super,
           (select v from public.common_data where id = u.master_id) as dept
         from public.user as u
         where id = $1
@@ -102,12 +150,6 @@ router
         ctx.request.body.remark,
         ctx.request.body.id
       ])
-      sql = `
-        update cheliangduan.auth
-        set super = $1
-        where master_id = $2
-      `
-      await client.query(sql, [ctx.request.body.super, ctx.request.body.id])
       ctx.response.body = { message: '', content: '' }
     } catch (err) {
       console.error(err.stack)
