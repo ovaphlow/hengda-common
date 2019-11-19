@@ -1,4 +1,7 @@
+const path = require('path')
+
 const Koa = require('koa')
+const staticCache = require('koa-static-cache')
 const bodyParser = require('koa-bodyparser')
 
 const config = require('./config')
@@ -6,6 +9,10 @@ const config = require('./config')
 const app = new Koa()
 
 app.env = config.env
+
+app.use(staticCache(path.join(__dirname, 'public'), {
+  maxAge: 30 * 24 * 60 * 60
+}))
 
 app.use(bodyParser())
 
