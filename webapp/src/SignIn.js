@@ -52,7 +52,7 @@ function SignIn() {
 
               <div className="form-group">
                 <label>密码</label>
-                <input type="text" name="password" value={item.password || ''}
+                <input type="password" name="password" value={item.password || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
