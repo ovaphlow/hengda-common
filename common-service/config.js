@@ -3,7 +3,7 @@ const os = require('os')
 const config = {
   env: 'development',
   app: {
-    port: 5000,
+    port: 5433,
     numChildProcesses: os.cpus().length
   },
   postgres: {
