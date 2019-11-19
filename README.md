@@ -17,3 +17,7 @@ webapp下运行
     npm run build
 
 后将生成的build目录中的文件复制到common-service下的public目录中
+
+在common-service目录下运行
+
+        node server.js
