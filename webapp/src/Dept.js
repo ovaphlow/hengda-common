@@ -1,5 +1,18 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { HashRouter as Router, Switch, Route, useParams } from 'react-router-dom'
+
+export default function DeptRouter() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/部门结构"><List /></Route>
+        <Route exact path="/部门结构/新增"><Detail category="新增" /></Route>
+        <Route exact path="/部门结构/:id"><Detail category="编辑" /></Route>
+        <Route exact path="/部门结构/:id/新增"><Detail category="新增班组" /></Route>
+      </Switch>
+    </Router>
+  )
+}
 
 function Toolbar() {
   return (
@@ -34,16 +47,15 @@ function ToolbarSub(props) {
   )
 }
 
-export function List() {
-  const [data, setData] = React.useState([])
+function List() {
+  const [dept_list, setDeptList] = useState([])
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`/api/common/dept`)
+  useEffect(() => {
+    ;(async () => {
+      const response = await window.fetch(`/api/common/dept`)
       const result = await response.json()
-      setData(result.content)
-    }
-    fetchData()
+      setDeptList(result.content)
+    })()
   }, [])
 
   return (
@@ -54,14 +66,16 @@ export function List() {
       <Toolbar />
 
       <div className="card shadow mt-2">
+        <div className="card-header"><p className="lead mb-0">车间</p></div>
+
         <div className="card-body">
           <div className="list-group">
             {
-              data.map(it => (
+              dept_list.map(it => (
                 <a href={`#部门结构/${it.id}`} className="list-group-item list-group-item-action" key={it.id}>
                   {it.v}
                   <span className="pull-right text-muted">
-                    下属部门数量：{it.qty}
+                    下属班组数量：{it.qty}
                   </span>
                 </a>
               ))
@@ -73,72 +87,109 @@ export function List() {
   )
 }
 
-export function Save() {
+function Detail(props) {
   const { id } = useParams()
-  const [master, setMaster] = React.useState(0)
-  const [data, setData] = React.useState({
-    v: '',
-    remark: ''
-  })
+  const [master, setMaster] = useState({})
+  const [v, setV] = useState('')
+  const [remark, setRemark] = useState('')
+  const [sub_dept_list, setSubDeptList] = useState([])
 
-  React.useEffect(() => {
-    if (!!!id) return
-    const fetchData = async id => {
-      const response = await fetch(`/api/common/dept/${id}`)
+  useEffect(() => {
+    if (props.category === '编辑') {
+      ;(async id => {
+        const response = await fetch(`/api/common/dept/${id}`)
+        const res = await response.json()
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        setV(res.content.v)
+        setRemark(res.content.remark)
+      })(id)
+      ;(async id => {
+        const response = await fetch(`/api/common/dept/${id}/sub`)
+        const res = await response.json()
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        setSubDeptList(res.content)
+      })(id)
+    }
+    if (props.category === '新增班组') {
+      ;(async id => {
+        const response = await fetch(`/api/common/dept/${id}`)
+        const res = await response.json()
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        setMaster(res.content)
+      })(id)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleSave = async () => {
+    const data = {
+      v: v,
+      remark: remark
+    }
+    if (props.category === '新增') {
+      const response = await window.fetch(`/api/common/dept/`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data)
+      })
       const result = await response.json()
       if (result.message) {
         window.alert(result.message)
         return
       }
-      setMaster(result.content)
+      window.history.go(-1)
+    } else if (props.category === '编辑') {
+      const response = await fetch(`/api/common/dept/${id}`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      const res = await response.json()
+      if (res.message) {
+        window.alert(res.message)
+        return
+      }
+      window.history.go(-1)
+    } else if (props.category === '新增班组') {
+      const response = await window.fetch(`/api/common/dept/${id}/sub`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      const result = await response.json()
+      if (result.message) {
+        window.alert(result.message)
+        return
+      }
+      window.history.go(-1)
     }
-    fetchData(id)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleChange = e => {
-    const { value, name } = e.target
-    setData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSave = async () => {
-    const response = await fetch(`/api/common/dept/`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    if (result.message) {
-      window.alert(result.message)
-      return
-    }
-    window.location = '#部门结构'
+  const handleRemove = async () => {
+    window.alert('功能建设中')
   }
 
-  const handleSaveSub = async () => {
-    const response = await fetch(`/api/common/dept/${master.id}/sub`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    if (result.message) {
-      window.alert(result.message)
-      return
-    }
-    window.location = `#部门结构/${master.id}`
+  const handleDetail = async () => {
+
   }
 
   return (
     <>
       <h1>
-        部门结构 - 新增
+        { props.category === '新增' && '新增 部门结构' } 
+        { props.category === '编辑' && '编辑 部门结构' } 
+        { props.category === '新增班组' && '新增 班组' } 
         {
-          id > 0 && (
+          props.categpry === '新增班组' && (
             <span className="pull-right text-muted">{master.v}</span>
           )
         }
@@ -153,39 +204,94 @@ export function Save() {
         <div className="card-body">
           <div className="form-group">
             <label>名称</label>
-            <input type="text" name="v" value={data.v}
-                className="form-control"
-                onChange={handleChange}
+            <input type="text" value={v || ''}
+              className="form-control"
+              onChange={event => setV(event.target.value)}
             />
           </div>
           <div className="form-group">
             <label>备注</label>
-            <input type="text" name="remark" value={data.remark}
-                className="form-control"
-                onChange={handleChange}
+            <input type="text" value={remark || ''}
+              className="form-control"
+              onChange={event => setRemark(event.target.value)}
             />
           </div>
         </div>
 
         <div className="card-footer">
-          {
-            id > 0 && (
-              <div className="btn-group">
-                <a href={`#部门结构/${master.id}`} className="btn btn-secondary">
-                  返回
-                </a>
-              </div>
-            )
-          }
+          <div className="btn-group">
+            <button type="button" className="btn btn-outline-secondary"
+              onClick={() => window.history.go(-1)}
+            >
+              返回
+            </button>
+          </div>
 
           <div className="btn-group pull-right">
-            <button type="button" className="btn btn-primary" onClick={id > 0 ? handleSaveSub : handleSave}>
+            {
+              props.category === '编辑' && (
+                <button type="button" className="btn btn-outline-danger"
+                  onClick={handleRemove}
+                >
+                  <i className="fa fa-fw fa-trash-o"></i>
+                  删除
+                </button>
+              )
+            }
+
+            <button type="button" className="btn btn-primary" onClick={handleSave}>
               <i className="fa fa-fw fa-check"></i>
               确定
             </button>
           </div>
         </div>
       </div>
+
+      {
+        props.category === '编辑' && (
+          <>
+            <hr />
+
+            <div className="card shadow mt-2">
+              <div className="card-header">
+                <span className="lead text-muted">
+                  下属班组
+                </span>
+
+                <div className="btn-group pull-right">
+                  <button type="button" className="btn btn-link"
+                    onClick={() => window.location = `#部门结构/${id}/新增`}
+                  >
+                    <i className="fa fa-fw fa-plus"></i>
+                    新增班组
+                  </button>
+                </div>
+              </div>
+
+              <div className="card-body">
+                <ul className="list-inline">
+                  {
+                    sub_dept_list.map(it => (
+                      <li className="list-inline-item" key={it.id}>
+                        <a href={`#部门结构/${it.id}`}>{it.v}</a>
+                        <button type="button" className="btn btn-link"
+                          onClick={() => {
+                            window.location = `#部门结构/${it.id}`
+                            window.location.reload(true)
+                          }}
+                        >
+                          <i className="fa fa-fw fa-tag"></i>
+                          {it.v}
+                        </button>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div>
+          </>
+        )
+      }
     </>
   )
 }

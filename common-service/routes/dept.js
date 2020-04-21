@@ -98,9 +98,9 @@ router
       const result = await client.query(sql, [
         ctx.request.body.v,
         ctx.request.body.remark,
-        ctx.request.body.id
+        parseInt(ctx.params.id)
       ])
-      ctx.response.body = { message: '', content: '' }
+      ctx.response.body = { message: '', content: result }
     } catch (err) {
       console.error(err.stack)
       ctx.response.body = {message: '服务器错误'}

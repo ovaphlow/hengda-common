@@ -5,7 +5,7 @@ import { Navbar, Sidebar } from './Components'
 import Home from './Home'
 import SignIn from './SignIn'
 import { CurrentUser, ChangePassword } from './CurrentUser'
-import { List as DeptList, Save as DeptSave, Update as DeptUpdate } from './Dept'
+import DeptRouter from './Dept'
 import UserRouter from './User'
 import { List as ModelList, Save as ModelSave, Update as ModelUpdate } from './Model'
 import { List as TrainList, Save as TrainSave, Update as TrainUpdate } from './Train'
@@ -36,10 +36,7 @@ function App() {
               <Route path="/当前用户"><CurrentUser /></Route>
               <Route path="/修改密码"><ChangePassword /></Route>
 
-              <Route exact path="/部门结构"><DeptList /></Route>
-              <Route path="/部门结构/新增"><DeptSave /></Route>
-              <Route exact path="/部门结构/:id"><DeptUpdate /></Route>
-              <Route path="/部门结构/:id/新增"><DeptSave /></Route>
+              <Route path="/部门结构"><DeptRouter /></Route>
 
               <Route path="/用户"><UserRouter /></Route>
 
