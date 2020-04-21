@@ -36,60 +36,6 @@ function Toolbar() {
   )
 }
 
-function Form(props) {
-  return (
-    <>
-      <div className="row">
-        <div className="col-4 col-lg-3">
-          <div className="form-group">
-            <label>用户名</label>
-            <input type="text" name="username" value={props.item.username || ''}
-              className="form-control"
-              onChange={props.handleChange}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col">
-          <div className="form-group">
-            <label>姓名</label>
-            <input type="text" name="name" value={props.item.name || ''}
-              autocomplete="name"
-              className="form-control"
-              onChange={props.handleChange}
-            />
-          </div>
-        </div>
-
-        <div className="col">
-          <div className="form-group">
-            <label>电话号码</label>
-            <input type="text" name="phone" value={props.item.phone || ''}
-              className="form-control"
-              onChange={props.handleChange}
-            />
-          </div>
-        </div>
-
-        {/* 替换 */}
-        <div className="col">
-          <DeptPicker name="master_id" value={props.item.master_id || ''} onChange={props.handleChange} />
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label>备注</label>
-        <input type="text" name="remark" value={props.item.remark || ''}
-          className="form-control"
-          onChange={props.handleChange}
-        />
-      </div>
-    </>
-  )
-}
-
 function List() {
   const [user_list, setUserList] = useState([])
 
