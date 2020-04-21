@@ -6,7 +6,7 @@ import Home from './Home'
 import SignIn from './SignIn'
 import { CurrentUser, ChangePassword } from './CurrentUser'
 import { List as DeptList, Save as DeptSave, Update as DeptUpdate } from './Dept'
-import { List as UserList, Save as UserSave, Update as UserUpdate } from './User'
+import UserRouter from './User'
 import { List as ModelList, Save as ModelSave, Update as ModelUpdate } from './Model'
 import { List as TrainList, Save as TrainSave, Update as TrainUpdate } from './Train'
 import { List as RouteList, Save as RouteSave, Update as RouteUpdate } from './Route'
@@ -41,9 +41,7 @@ function App() {
               <Route exact path="/部门结构/:id"><DeptUpdate /></Route>
               <Route path="/部门结构/:id/新增"><DeptSave /></Route>
 
-              <Route exact path="/用户"><UserList /></Route>
-              <Route path="/用户/新增"><UserSave /></Route>
-              <Route path="/用户/:id"><UserUpdate /></Route>
+              <Route path="/用户"><UserRouter /></Route>
 
               <Route exact path="/车型"><ModelList /></Route>
               <Route path="/车型/新增"><ModelSave /></Route>
