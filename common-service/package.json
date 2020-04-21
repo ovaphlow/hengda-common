@@ -7,10 +7,10 @@
   "author": "ovaphlow@live.com",
   "license": "MIT",
   "dependencies": {
-    "@koa/router": "^8.0.2",
+    "@koa/router": "^8.0.8",
     "koa": "^2.11.0",
-    "koa-bodyparser": "^4.2.1",
+    "koa-bodyparser": "^4.3.0",
     "koa-static-cache": "^5.1.2",
-    "pg": "^7.12.1"
+    "pg": "^7.18.2"
   }
 }
