@@ -7,8 +7,8 @@ const config = {
     numChildProcesses: os.cpus().length
   },
   postgres: {
-    user: 'kill8268',
-    password: '',
+    user: 'hengda',
+    password: 'srd@HD.1123',
     host: '192.168.1.246',
     port: 5432,
     database: 'hengda'
