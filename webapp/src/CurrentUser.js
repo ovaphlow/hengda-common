@@ -26,7 +26,7 @@ export function CurrentUser() {
     const auth = JSON.parse(sessionStorage.getItem('auth_super'))
     if (!!!auth) return
     const fetchData = async id => {
-      const response = await fetch(`/api/common/user/${id}`)
+      const response = await window.fetch(`/api/common/user/${id}`)
       const res = await response.json()
       if (res.message) {
         window.alert(res.message)
@@ -43,7 +43,7 @@ export function CurrentUser() {
   }
 
   const handleUpdate = async () => {
-    const response = await fetch(`/api/common/user/${item.id}`, {
+    const response = await window.fetch(`/api/common/user/${item.id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json'
@@ -170,7 +170,7 @@ export function ChangePassword() {
       window.alert('两次输入的新密码不一致')
       return
     }
-    const response = await fetch(`/api/common/user/password`, {
+    const response = await window.fetch(`/api/common/user/password`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json'

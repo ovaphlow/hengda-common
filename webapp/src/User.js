@@ -41,7 +41,7 @@ function List() {
 
   useEffect(() => {
     ;(async () => {
-      const response = await fetch(`/api/common/user/`)
+      const response = await window.fetch(`/api/common/user/`)
       const result = await response.json()
       setUserList(result.content)
     })()

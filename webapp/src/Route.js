@@ -48,7 +48,7 @@ export function List() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/common/route/`)
+      const response = await window.fetch(`/api/common/route/`)
       const result = await response.json()
       if (result.message) {
         window.alert(result.message)
@@ -115,7 +115,7 @@ export function Save() {
       window.alert('请完整填写所需信息')
       return
     }
-    const response = await fetch(`/api/common/route/`, {
+    const response = await window.fetch(`/api/common/route/`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -161,7 +161,7 @@ export function Update() {
 
   React.useEffect(() => {
     const fetchData = async id => {
-      const response = await fetch(`/api/common/route/${id}`)
+      const response = await window.fetch(`/api/common/route/${id}`)
       const result = await response.json()
       if (result.message) {
         window.alert(result.message)
@@ -180,7 +180,7 @@ export function Update() {
 
   const handleRemove = async () => {
     if (!!!window.confirm('确定要删除当前数据？')) return
-    const response = await fetch(`/api/common/route/${id}`, {method: 'DELETE'})
+    const response = await window.fetch(`/api/common/route/${id}`, {method: 'DELETE'})
     const result = await response.json()
     if (result.message) {
       window.alert(result.message)
@@ -194,7 +194,7 @@ export function Update() {
       window.alert('请完整填写所需信息')
       return
     }
-    const response = await fetch(`/api/common/route/${id}`, {
+    const response = await window.fetch(`/api/common/route/${id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json'

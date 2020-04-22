@@ -74,7 +74,7 @@ export function DeptPicker(props) {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/common/dept/sub/`)
+      const response = await window.fetch(`/api/common/dept/sub/`)
       const result = await response.json()
       if (result.message) {
         window.alert(result.message)
@@ -108,7 +108,7 @@ export function ModelPicker(props) {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/common/model/`)
+      const response = await window.fetch(`/api/common/model/`)
       const result = await response.json()
       if (result.message) {
         window.alert(result.message)

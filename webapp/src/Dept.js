@@ -97,7 +97,7 @@ function Detail(props) {
   useEffect(() => {
     if (props.category === '编辑') {
       ;(async id => {
-        const response = await fetch(`/api/common/dept/${id}`)
+        const response = await window.fetch(`/api/common/dept/${id}`)
         const res = await response.json()
         if (res.message) {
           window.alert(res.message)
@@ -107,7 +107,7 @@ function Detail(props) {
         setRemark(res.content.remark)
       })(id)
       ;(async id => {
-        const response = await fetch(`/api/common/dept/${id}/sub`)
+        const response = await window.fetch(`/api/common/dept/${id}/sub`)
         const res = await response.json()
         if (res.message) {
           window.alert(res.message)
@@ -118,7 +118,7 @@ function Detail(props) {
     }
     if (props.category === '新增班组') {
       ;(async id => {
-        const response = await fetch(`/api/common/dept/${id}`)
+        const response = await window.fetch(`/api/common/dept/${id}`)
         const res = await response.json()
         if (res.message) {
           window.alert(res.message)
@@ -148,7 +148,7 @@ function Detail(props) {
       }
       window.history.go(-1)
     } else if (props.category === '编辑') {
-      const response = await fetch(`/api/common/dept/${id}`, {
+      const response = await window.fetch(`/api/common/dept/${id}`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(data)
@@ -303,7 +303,7 @@ export function Update() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/common/dept/${id}`)
+      const response = await window.fetch(`/api/common/dept/${id}`)
       const result = await response.json()
       if (result.message) {
         window.alert(result.message)
@@ -317,7 +317,7 @@ export function Update() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/common/dept/${id}/sub`)
+      const response = await window.fetch(`/api/common/dept/${id}/sub`)
       const result = await response.json()
       if (result.message) {
         window.alert(result.message)
@@ -335,7 +335,7 @@ export function Update() {
   }
 
   const handleUpdate = async () => {
-    const response = await fetch(`/api/common/dept/:id`, {
+    const response = await window.fetch(`/api/common/dept/:id`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json'
