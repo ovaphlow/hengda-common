@@ -121,24 +121,19 @@ export function ModelPicker(props) {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    const fetchData = async () => {
+    ;(async () => {
       const response = await window.fetch(`/api/common/model/`)
-      const result = await response.json()
-      if (result.message) {
-        window.alert(result.message)
-        return
-      }
-      setData(result.content)
-    }
-    fetchData()
+      const res = await response.json()
+      setData(res.content)
+    })()
   }, [])
 
   return (
     <div className="form-group">
       <label>车型</label>
-      <select name={props.name || 'model_id'} value={props.value || ''}
-          className="form-control"
-          onChange={props.onChange}
+      <select value={props.value || '0'}
+        className="form-control"
+        onChange={props.onChange}
       >
         <option value="0">未选择</option>
         {

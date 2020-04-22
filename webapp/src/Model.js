@@ -33,28 +33,6 @@ function Toolbar() {
   )
 }
 
-function Form(props) {
-  return (
-    <>
-      <div className="form-group">
-        <label>名称</label>
-        <input type="text" name="v" value={props.data.v || ''}
-          className="form-control"
-          onChange={props.handleChange}
-        />
-      </div>
-
-      <div className="form-group">
-        <label>备注</label>
-        <input type="text" name="remark" value={props.data.remark || ''}
-          className="form-control"
-          onChange={props.handleChange}
-        />
-      </div>
-    </>
-  )
-}
-
 function List() {
   const [data, setData] = useState([])
 
@@ -222,88 +200,6 @@ function Detail(props) {
             }
 
             <button type="button" className="btn btn-primary" onClick={handleSave}>
-              <i className="fa fa-fw fa-check"></i>
-              确定
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}
-
-export function Update() {
-  const { id } = useParams()
-  const [data, setData] = React.useState(0)
-
-  React.useEffect(() => {
-    const fetchData = async id => {
-      const response = await window.fetch(`/api/common/model/${id}`)
-      const result = await response.json()
-      if (result.message) {
-        window.alert(result.message)
-        return
-      }
-      setData(result.content)
-      console.info(result)
-    }
-    fetchData(id)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleChange = e => {
-    const { value, name } = e.target
-    setData(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handleRemove = async () => {
-    if (!!!window.confirm('确定要删除当前数据？')) return
-    const response = await window.fetch(`/api/common/model/${id}`, {method: 'DELETE'})
-    const result = await response.json()
-    if (result.message) {
-      window.alert(result.message)
-      return
-    }
-    window.location = '#车型'
-  }
-
-  const handleUpdate = async () => {
-    const response = await window.fetch(`/api/common/model/${id}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    if (result.message) {
-      window.alert(result.message)
-      return
-    }
-    window.location = '#车型'
-  }
-
-  return (
-    <>
-      <h2>车型 - 新增</h2>
-      <hr />
-
-      <Toolbar />
-
-      <div className="card shadow mt-2">
-        <div className="card-body">
-          <Form data={data} handleChange={handleChange} />
-        </div>
-
-        <div className="card-footer">
-          <div className="btn-group">
-            <button type="button" className="btn btn-danger" onClick={handleRemove}>
-              删除
-            </button>
-          </div>
-
-          <div className="btn-group pull-right">
-            <button type="button" className="btn btn-primary" onClick={handleUpdate}>
               <i className="fa fa-fw fa-check"></i>
               确定
             </button>

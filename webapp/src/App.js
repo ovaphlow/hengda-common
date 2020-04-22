@@ -9,7 +9,7 @@ import DeptRouter from './Dept'
 import Dept2Router from './Dept2'
 import UserRouter from './User'
 import ModelRouter from './Model'
-import { List as TrainList, Save as TrainSave, Update as TrainUpdate } from './Train'
+import TrainRouter from './Train'
 import RouteRouter from './Route'
 
 function App() {
@@ -44,9 +44,7 @@ function App() {
 
               <Route path="/车型"><ModelRouter /></Route>
 
-              <Route exact path="/车组"><TrainList /></Route>
-              <Route path="/车组/新增"><TrainSave /></Route>
-              <Route path="/车组/:id"><TrainUpdate /></Route>
+              <Route path="/车组"><TrainRouter /></Route>
 
               <Route path="/车次"><RouteRouter /></Route>
             </Switch>
