@@ -6,6 +6,7 @@ import Home from './Home'
 import SignIn from './SignIn'
 import { CurrentUser, ChangePassword } from './CurrentUser'
 import DeptRouter from './Dept'
+import Dept2Router from './Dept2'
 import UserRouter from './User'
 import { List as ModelList, Save as ModelSave, Update as ModelUpdate } from './Model'
 import { List as TrainList, Save as TrainSave, Update as TrainUpdate } from './Train'
@@ -37,6 +38,7 @@ function App() {
               <Route path="/修改密码"><ChangePassword /></Route>
 
               <Route path="/部门结构"><DeptRouter /></Route>
+              <Route path="/班组"><Dept2Router /></Route>
 
               <Route path="/用户"><UserRouter /></Route>
 

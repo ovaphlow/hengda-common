@@ -11,7 +11,7 @@ const app = new Koa()
 app.env = config.env
 
 app.use(staticCache(path.join(__dirname, 'public'), {
-  maxAge: 30 * 24 * 60 * 60
+  maxAge: 7 * 24 * 60 * 60
 }))
 
 app.use(bodyParser())

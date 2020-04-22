@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { HashRouter as Router, Switch, Route, useParams } from 'react-router-dom'
 
+import { ListComponent as Dept2ListComponent } from './Dept2'
+
 export default function DeptRouter() {
   return (
     <Router>
@@ -89,10 +91,8 @@ function List() {
 
 function Detail(props) {
   const { id } = useParams()
-  const [master, setMaster] = useState({})
   const [v, setV] = useState('')
   const [remark, setRemark] = useState('')
-  const [sub_dept_list, setSubDeptList] = useState([])
 
   useEffect(() => {
     if (props.category === '编辑') {
@@ -105,26 +105,6 @@ function Detail(props) {
         }
         setV(res.content.v)
         setRemark(res.content.remark)
-      })(id)
-      ;(async id => {
-        const response = await window.fetch(`/api/common/dept/${id}/sub`)
-        const res = await response.json()
-        if (res.message) {
-          window.alert(res.message)
-          return
-        }
-        setSubDeptList(res.content)
-      })(id)
-    }
-    if (props.category === '新增班组') {
-      ;(async id => {
-        const response = await window.fetch(`/api/common/dept/${id}`)
-        const res = await response.json()
-        if (res.message) {
-          window.alert(res.message)
-          return
-        }
-        setMaster(res.content)
       })(id)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,46 +139,28 @@ function Detail(props) {
         return
       }
       window.history.go(-1)
-    } else if (props.category === '新增班组') {
-      const response = await window.fetch(`/api/common/dept/${id}/sub`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      const result = await response.json()
-      if (result.message) {
-        window.alert(result.message)
-        return
-      }
-      window.history.go(-1)
     }
   }
 
   const handleRemove = async () => {
-    window.alert('功能建设中')
-  }
-
-  const handleDetail = async () => {
-
+    if (!!!window.confirm('确定要删除当前数据，并且同时删除该车间下属的所有班组？')) return
+    const response = await window.fetch(`/api/common/dept/${id}`, {
+      method: 'DELETE'
+    })
+    const res = await response.json()
+    if (res.message) {
+      window.alert(res.message)
+      return
+    }
+    window.history.go(-1)
   }
 
   return (
     <>
-      <h1>
-        { props.category === '新增' && '新增 部门结构' } 
-        { props.category === '编辑' && '编辑 部门结构' } 
-        { props.category === '新增班组' && '新增 班组' } 
-        {
-          props.categpry === '新增班组' && (
-            <span className="pull-right text-muted">{master.v}</span>
-          )
-        }
-      </h1>
+      <h1>{props.category} 部门结构</h1>
       <hr />
 
-      {
-        !!!id && <Toolbar />
-      }
+      <Toolbar />
 
       <div className="card shadow mt-2">
         <div className="card-body">
@@ -249,47 +211,7 @@ function Detail(props) {
 
       {
         props.category === '编辑' && (
-          <>
-            <hr />
-
-            <div className="card shadow mt-2">
-              <div className="card-header">
-                <span className="lead text-muted">
-                  下属班组
-                </span>
-
-                <div className="btn-group pull-right">
-                  <button type="button" className="btn btn-link"
-                    onClick={() => window.location = `#部门结构/${id}/新增`}
-                  >
-                    <i className="fa fa-fw fa-plus"></i>
-                    新增班组
-                  </button>
-                </div>
-              </div>
-
-              <div className="card-body">
-                <ul className="list-inline">
-                  {
-                    sub_dept_list.map(it => (
-                      <li className="list-inline-item" key={it.id}>
-                        <a href={`#部门结构/${it.id}`}>{it.v}</a>
-                        <button type="button" className="btn btn-link"
-                          onClick={() => {
-                            window.location = `#部门结构/${it.id}`
-                            window.location.reload(true)
-                          }}
-                        >
-                          <i className="fa fa-fw fa-tag"></i>
-                          {it.v}
-                        </button>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </div>
-            </div>
-          </>
+          <Dept2ListComponent dept_id={id} dept_name={v} />
         )
       }
     </>
