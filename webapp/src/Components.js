@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 export function Navbar() {
   return (
@@ -70,27 +70,22 @@ export function Sidebar() {
 }
 
 export function DeptPicker(props) {
-  const [list, setList] = React.useState([])
+  const [list, setList] = useState([])
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await window.fetch(`/api/common/dept/sub/`)
-      const result = await response.json()
-      if (result.message) {
-        window.alert(result.message)
-        return
-      }
-      setList(result.content)
-    }
-    fetchData()
+  useEffect(() => {
+    ;(async () => {
+      const response = await window.fetch(`/api/common/dept/`)
+      const res = await response.json()
+      setList(res.content)
+    })()
   }, [])
 
   return (
     <div className="form-group">
-      <label>部门</label>
-      <select name={props.name || 'dept_id'} value={props.value || ''}
-          className="form-control"
-          onChange={props.onChange}
+      <label>{props.caption || '车间'}</label>
+      <select value={props.value || ''}
+        className="form-control"
+        onChange={props.onChange}
       >
         <option value="0">未选择</option>
         {
@@ -103,10 +98,29 @@ export function DeptPicker(props) {
   )
 }
 
-export function ModelPicker(props) {
-  const [data, setData] = React.useState([])
+export function Dept2Picker(props) {
+  return (
+    <div className="form-group">
+      <label>{props.caption || '班组'}</label>
+      <select value={props.value || ''}
+        className="form-control"
+        onChange={props.onChange}
+      >
+        <option value="0">未选择</option>
+        {
+          props.dept2_list.map(it => (
+            <option value={it.id} key={it.id}>{it.v}</option>
+          ))
+        }
+      </select>
+    </div>
+  )
+}
 
-  React.useEffect(() => {
+export function ModelPicker(props) {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
     const fetchData = async () => {
       const response = await window.fetch(`/api/common/model/`)
       const result = await response.json()

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { HashRouter as Router, Switch, Route, useParams } from 'react-router-dom'
 import md5 from 'blueimp-md5'
 
-import { DeptPicker } from './Components'
+import { DeptPicker, Dept2Picker } from './Components'
 
 export default function UserRouter() {
   return (
@@ -101,38 +101,53 @@ function Detail(props) {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [phone, setPhone] = useState('')
+  const [dept_id, setDeptID] = useState(0)
   const [master_id, setMasterID] = useState(0)
   const [remark, setRemark] = useState('')
+  const [dept2_list, setDept2List] = useState([])
 
   useEffect(() => {
     if (props.category === '编辑') {
       (async id => {
         const response = await window.fetch(`/api/common/user/${id}`)
-        const result = await response.json()
-        if (result.message) {
-          window.alert(result.message)
+        const res = await response.json()
+        if (res.message) {
+          window.alert(res.message)
           return
         }
-        setName(result.content.name)
-        setUsername(result.content.username)
-        setPhone(result.content.phone)
-        setMasterID(result.content.master_id)
-        setRemark(result.content.remark)
+        setName(res.content.name)
+        setUsername(res.content.username)
+        setPhone(res.content.phone)
+        setDeptID(res.content.dept_id)
+        setMasterID(res.content.master_id)
+        setRemark(res.content.remark)
       })(id)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (dept_id === 0) return
+    setMasterID(0)
+    setDept2List([])
+    ;(async dept_id => {
+      const response = await window.fetch(`/api/common/dept/${dept_id}/sub/`)
+      const res = await response.json()
+      setDept2List(res.content)
+    })(dept_id)
+  }, [dept_id])
 
   const handleSave = async () => {
     if (!!!name || !!!username || !!!master_id) {
       window.alert('请完整填写所需信息')
       return
     }
-    const body = {
+    const data = {
       name: name,
       username: username,
       password: md5('1234'),
       phone: phone,
+      dept_id: dept_id,
       master_id: master_id,
       remark: remark
     }
@@ -140,11 +155,11 @@ function Detail(props) {
       const response = await window.fetch(`/api/common/user/`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(data)
       })
-      const result = await response.json()
-      if (result.message) {
-        window.alert(result.message)
+      const res = await response.json()
+      if (res.message) {
+        window.alert(res.message)
         return
       }
       window.history.go(-1)
@@ -152,11 +167,11 @@ function Detail(props) {
       const response = await window.fetch(`/api/common/user/${id}`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(data)
       })
-      const result = await response.json()
-      if (result.message) {
-        window.alert(result.message)
+      const res = await response.json()
+      if (res.message) {
+        window.alert(res.message)
         return
       }
       window.history.go(-1)
@@ -168,9 +183,9 @@ function Detail(props) {
     const response = await window.fetch(`/api/common/user/${id}`, {
       method: 'DELETE'
     })
-    const result = await response.json()
-    if (result.message) {
-      window.alert(result.message)
+    const res = await response.json()
+    if (res.message) {
+      window.alert(res.message)
       return
     }
     window.history.go(-1)
@@ -218,12 +233,21 @@ function Detail(props) {
               </div>
             </div>
 
-            {/* 替换 */}
             <div className="col">
-              <DeptPicker name="master_id" value={master_id || ''}
-                onChange={event => setMasterID(event.target.value)}
+              <DeptPicker value={dept_id || '0'}
+                onChange={event => setDeptID(parseInt(event.target.value))}
               />
             </div>
+
+            {
+              dept2_list.length > 0 && (
+                <div className="col">
+                  <Dept2Picker value={master_id || '0'} dept2_list={dept2_list}
+                    onChange={event => setMasterID(event.target.value)}
+                  />
+                </div>
+              )
+            }
           </div>
 
           <div className="form-group">

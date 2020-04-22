@@ -12,8 +12,9 @@ router.post('/sign-in/super', async ctx => {
   const client = await postgres.connect()
   try {
     const sql = `
-      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super,
-        (select v from public.common_data where id = u.master_id) as dept
+      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super, u.dept_id, u.master_id,
+        (select v from public.common_data where id = u.master_id) as dept2,
+        (select v from public.common_data where id = u.dept_id) as dept
       from public.user as u
       where username = $1 and password = $2 and auth_super = 1
     `
@@ -64,8 +65,9 @@ router.get('/', async ctx => {
   const client = await postgres.connect()
   try {
     const sql = `
-      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super as super,
-        (select v from public.common_data where id = u.master_id) as dept
+      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super as super, u.dept_id, u.master_id,
+        (select v from public.common_data where id = u.master_id) as dept2,
+        (select v from public.common_data where id = u.dept_id) as dept
       from public.user as u
       order by id desc
     `
@@ -83,8 +85,8 @@ router.get('/', async ctx => {
   try {
     let sql = `
       insert into public.user
-        (master_id, username, password, name, phone, remark, auth_super, position, pinyin)
-      values ($1, $2, $3, $4, $5, $6, 0, '', '')
+        (master_id, username, password, name, phone, remark, auth_super, position)
+      values ($1, $2, $3, $4, $5, $6, 0, '')
       returning id
     `
     const result = await client.query(sql, [
@@ -114,8 +116,9 @@ router.get('/:id', async ctx => {
   const client = await postgres.connect()
   try {
     const sql = `
-      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super,
-        (select v from public.common_data where id = u.master_id) as dept
+      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super, u.dept_id, u.master_id,
+        (select v from public.common_data where id = u.master_id) as dept2,
+        (select v from public.common_data where id = u.dept_id) as dept
       from public.user as u
       where id = $1
       limit 1
@@ -137,8 +140,8 @@ router.get('/:id', async ctx => {
   try {
     let sql = `
       update public.user
-      set username = $1, name = $2, phone = $3, master_id = $4, remark = $5
-      where id = $6
+      set username = $1, name = $2, phone = $3, master_id = $4, remark = $5, dept_id = $6
+      where id = $7
     `
     const result = await client.query(sql, [
       ctx.request.body.username,
@@ -146,9 +149,10 @@ router.get('/:id', async ctx => {
       ctx.request.body.phone,
       ctx.request.body.master_id,
       ctx.request.body.remark,
+      ctx.request.body.dept_id,
       ctx.request.body.id
     ])
-    ctx.response.body = { message: '', content: '' }
+    ctx.response.body = { message: '', content: result }
   } catch (err) {
     console.error(err.stack)
     ctx.response.body = {message: '服务器错误'}
