@@ -8,9 +8,9 @@ import { CurrentUser, ChangePassword } from './CurrentUser'
 import DeptRouter from './Dept'
 import Dept2Router from './Dept2'
 import UserRouter from './User'
-import { List as ModelList, Save as ModelSave, Update as ModelUpdate } from './Model'
+import ModelRouter from './Model'
 import { List as TrainList, Save as TrainSave, Update as TrainUpdate } from './Train'
-import { List as RouteList, Save as RouteSave, Update as RouteUpdate } from './Route'
+import RouteRouter from './Route'
 
 function App() {
   React.useEffect(() => {
@@ -42,17 +42,13 @@ function App() {
 
               <Route path="/用户"><UserRouter /></Route>
 
-              <Route exact path="/车型"><ModelList /></Route>
-              <Route path="/车型/新增"><ModelSave /></Route>
-              <Route path="/车型/:id"><ModelUpdate /></Route>
+              <Route path="/车型"><ModelRouter /></Route>
 
               <Route exact path="/车组"><TrainList /></Route>
               <Route path="/车组/新增"><TrainSave /></Route>
               <Route path="/车组/:id"><TrainUpdate /></Route>
 
-              <Route exact path="/车次"><RouteList /></Route>
-              <Route path="/车次/新增"><RouteSave /></Route>
-              <Route path="/车次/:id"><RouteUpdate /></Route>
+              <Route path="/车次"><RouteRouter /></Route>
             </Switch>
           </div>
         </div>
