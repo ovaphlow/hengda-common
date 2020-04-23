@@ -25,7 +25,8 @@ export default function SignIn() {
       return
     }
     sessionStorage.setItem('auth_super', JSON.stringify(res.content))
-    window.history.go(-1)
+    // window.history.go(-1)
+    window.location = '#/'
   }
 
   return (

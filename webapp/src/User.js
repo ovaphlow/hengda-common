@@ -63,7 +63,8 @@ function List() {
                 <th>姓名</th>
                 <th>用户名</th>
                 <th>电话号码</th>
-                <th>部门</th>
+                <th>车间</th>
+                <th>班组</th>
                 <th>管理员</th>
               </tr>
             </thead>
@@ -84,6 +85,7 @@ function List() {
                     <td>{it.username}</td>
                     <td>{it.phone}</td>
                     <td>{it.dept}</td>
+                    <td>{it.dept2}</td>
                     <td>{it.super === 1 ? '是' : '否'}</td>
                   </tr>
                 ))
@@ -128,7 +130,6 @@ function Detail(props) {
 
   useEffect(() => {
     if (dept_id === 0) return
-    setMasterID(0)
     setDept2List([])
     ;(async dept_id => {
       const response = await window.fetch(`/api/common/dept/${dept_id}/sub/`)
@@ -138,7 +139,7 @@ function Detail(props) {
   }, [dept_id])
 
   const handleSave = async () => {
-    if (!!!name || !!!username || !!!master_id) {
+    if (!!!name || !!!username) {
       window.alert('请完整填写所需信息')
       return
     }

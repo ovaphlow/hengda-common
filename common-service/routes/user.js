@@ -136,6 +136,7 @@ router.get('/:id', async ctx => {
   }
 })
 .put('/:id', async ctx => {
+  console.info(ctx.request.body)
   const client = await postgres.connect()
   try {
     let sql = `
@@ -147,10 +148,10 @@ router.get('/:id', async ctx => {
       ctx.request.body.username,
       ctx.request.body.name,
       ctx.request.body.phone,
-      ctx.request.body.master_id,
+      parseInt(ctx.request.body.master_id),
       ctx.request.body.remark,
-      ctx.request.body.dept_id,
-      ctx.request.body.id
+      parseInt(ctx.request.body.dept_id),
+      parseInt(ctx.params.id)
     ])
     ctx.response.body = { message: '', content: result }
   } catch (err) {

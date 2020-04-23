@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Home() {
+export default function Home() {
   return (
     <>
       <h1>首页</h1>
@@ -12,5 +12,3 @@ function Home() {
     </>
   )
 }
-
-export default Home

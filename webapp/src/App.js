@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 
 import { Navbar, Sidebar } from './Components'
 import Home from './Home'
 import SignIn from './SignIn'
-import { CurrentUser, ChangePassword } from './CurrentUser'
+import CurrentUserRouter from './CurrentUser'
 import DeptRouter from './Dept'
 import Dept2Router from './Dept2'
 import UserRouter from './User'
@@ -12,8 +12,8 @@ import ModelRouter from './Model'
 import TrainRouter from './Train'
 import RouteRouter from './Route'
 
-function App() {
-  React.useEffect(() => {
+export default function App() {
+  useEffect(() => {
     const auth = JSON.parse(sessionStorage.getItem('auth_super'))
     if (!!!auth) {
       window.location = '#登录'
@@ -34,8 +34,7 @@ function App() {
               <Route exact path="/"><Home /></Route>
 
               <Route path="/登录"><SignIn /></Route>
-              <Route path="/当前用户"><CurrentUser /></Route>
-              <Route path="/修改密码"><ChangePassword /></Route>
+              <Route path="/当前用户"><CurrentUserRouter /></Route>
 
               <Route path="/部门结构"><DeptRouter /></Route>
               <Route path="/班组"><Dept2Router /></Route>
@@ -54,5 +53,3 @@ function App() {
     </Router>
   )
 }
-
-export default App
