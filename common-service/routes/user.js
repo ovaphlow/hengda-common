@@ -61,6 +61,70 @@ router.put('/password', async ctx => {
   }
 })
 
+router.get('/:id', async ctx => {
+  const client = await postgres.connect()
+  try {
+    const sql = `
+      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super, u.dept_id, u.master_id,
+        (select v from public.common_data where id = u.master_id) as dept2,
+        (select v from public.common_data where id = u.dept_id) as dept
+      from public.user as u
+      where id = $1
+      limit 1
+    `
+    const result = await client.query(sql, [ctx.params.id])
+    ctx.response.body = {
+      message: '',
+      content: result.rows.length === 1 ? result.rows[0] : {}
+    }
+  } catch (err) {
+    console.error(err.stack)
+    ctx.response.body = {message: '服务器错误'}
+  } finally {
+    client.release()
+  }
+})
+.put('/:id', async ctx => {
+  const client = await postgres.connect()
+  try {
+    let sql = `
+      update public.user
+      set username = $1, name = $2, phone = $3, master_id = $4, remark = $5, dept_id = $6
+      where id = $7
+    `
+    const result = await client.query(sql, [
+      ctx.request.body.username,
+      ctx.request.body.name,
+      ctx.request.body.phone,
+      parseInt(ctx.request.body.master_id),
+      ctx.request.body.remark,
+      parseInt(ctx.request.body.dept_id),
+      parseInt(ctx.params.id)
+    ])
+    ctx.response.body = { message: '', content: result }
+  } catch (err) {
+    console.error(err.stack)
+    ctx.response.body = {message: '服务器错误'}
+  } finally {
+    client.release()
+  }
+})
+.delete('/:id', async ctx => {
+  const client = await postgres.connect()
+  try {
+    let sql = `
+      delete from public.user where id = $1
+    `
+    await client.query(sql, [ctx.params.id])
+    ctx.response.body = { message: '', content: '' }
+  } catch (err) {
+    console.error(err.stack)
+    ctx.response.body = {message: '服务器错误'}
+  } finally {
+    client.release()
+  }
+})
+
 router.get('/', async ctx => {
   const client = await postgres.connect()
   try {
@@ -104,71 +168,6 @@ router.get('/', async ctx => {
     `
     await client.query(sql, [result.rows[0].id, ctx.request.body.super])
     ctx.response.body = {message: '', content: ''}
-  } catch (err) {
-    console.error(err.stack)
-    ctx.response.body = {message: '服务器错误'}
-  } finally {
-    client.release()
-  }
-})
-
-router.get('/:id', async ctx => {
-  const client = await postgres.connect()
-  try {
-    const sql = `
-      select u.id, u.master_id, u.username, u.name, u.phone, u.remark, u.auth_super, u.dept_id, u.master_id,
-        (select v from public.common_data where id = u.master_id) as dept2,
-        (select v from public.common_data where id = u.dept_id) as dept
-      from public.user as u
-      where id = $1
-      limit 1
-    `
-    const result = await client.query(sql, [ctx.params.id])
-    ctx.response.body = {
-      message: '',
-      content: result.rows.length === 1 ? result.rows[0] : {}
-    }
-  } catch (err) {
-    console.error(err.stack)
-    ctx.response.body = {message: '服务器错误'}
-  } finally {
-    client.release()
-  }
-})
-.put('/:id', async ctx => {
-  console.info(ctx.request.body)
-  const client = await postgres.connect()
-  try {
-    let sql = `
-      update public.user
-      set username = $1, name = $2, phone = $3, master_id = $4, remark = $5, dept_id = $6
-      where id = $7
-    `
-    const result = await client.query(sql, [
-      ctx.request.body.username,
-      ctx.request.body.name,
-      ctx.request.body.phone,
-      parseInt(ctx.request.body.master_id),
-      ctx.request.body.remark,
-      parseInt(ctx.request.body.dept_id),
-      parseInt(ctx.params.id)
-    ])
-    ctx.response.body = { message: '', content: result }
-  } catch (err) {
-    console.error(err.stack)
-    ctx.response.body = {message: '服务器错误'}
-  } finally {
-    client.release()
-  }
-})
-.delete('/:id', async ctx => {
-  const client = await postgres.connect()
-  try {
-    let sql = `
-      delete from public.user where id = $1
-    `
-    await client.query(sql, [ctx.params.id])
-    ctx.response.body = { message: '', content: '' }
   } catch (err) {
     console.error(err.stack)
     ctx.response.body = {message: '服务器错误'}
