@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import IconAdd from '../icon/Add';
+import IconList from '../icon/List';
 import IconRename from '../icon/Rename';
-import { Toolbar } from './Component';
 
 export default function List() {
   const [user_list, setUserList] = useState([]);
@@ -19,12 +20,28 @@ export default function List() {
       <h2>用户</h2>
       <hr />
 
-      <Toolbar />
+      <div className="row">
+        <div className="col">
+          <a href="#/新增" className="btn btn-outline-success">
+            <IconAdd />
+            新增
+          </a>
+        </div>
+
+        <div className="col">
+          <div className="btn-group float-right">
+            <a href="#/" className="btn btn-outline-secondary">
+              <IconList />
+              列表
+            </a>
+          </div>
+        </div>
+      </div>
 
       <div className="card shadow mt-2">
         <div className="card-body table-responsive">
-          <table className="table table-hover table-bordered">
-            <thead className="thead-dark">
+          <table className="table">
+            <thead>
               <tr>
                 <th className="text-right">序号</th>
                 <th>姓名</th>

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import md5 from 'blueimp-md5';
 
 import { DeptPicker, Dept2Picker } from '../Component';
-import { Toolbar } from './Component';
+import IconAdd from '../icon/Add';
+import IconList from '../icon/List';
 
 export default function Detail({ component_option }) {
   const { id } = useParams();
@@ -109,7 +110,23 @@ export default function Detail({ component_option }) {
       </h2>
       <hr />
 
-      <Toolbar />
+      <div className="row">
+        <div className="col">
+          <a href="#/新增" className="btn btn-outline-success">
+            <IconAdd />
+            新增
+          </a>
+        </div>
+
+        <div className="col">
+          <div className="btn-group float-right">
+            <a href="#/" className="btn btn-outline-secondary">
+              <IconList />
+              列表
+            </a>
+          </div>
+        </div>
+      </div>
 
       <div className="card shadow mt-2">
         <div className="card-body">

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import IconAdd from '../icon/Add';
+import IconList from '../icon/List';
 import IconRename from '../icon/Rename';
 
 export default function List() {
@@ -20,16 +22,16 @@ export default function List() {
 
       <div className="row">
         <div className="col">
-          <a href="#/新增" className="btn btn-sm btn-outline-success">
-            <i className="fa fa-fw fa-plus" />
+          <a href="#/新增" className="btn btn-outline-success">
+            <IconAdd />
             新增
           </a>
         </div>
 
         <div className="col">
           <div className="btn-group float-right">
-            <a href="#/" className="btn btn-sm btn-outline-secondary">
-              <i className="fa fa-fw fa-list" />
+            <a href="#/" className="btn btn-outline-secondary">
+              <IconList />
               列表
             </a>
           </div>
@@ -54,7 +56,6 @@ export default function List() {
                     <a href={`#/${it.id}`} className="float-left">
                       <IconRename />
                     </a>
-
                     {it.id}
                   </td>
                   <td>{it.v}</td>
