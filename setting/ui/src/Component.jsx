@@ -32,31 +32,31 @@ export function Sidebar() {
 
           <ul className="nav flex-column mb-2">
             <li className="nav-item">
-              <a className="nav-link" href="dept.html">
+              <a href="dept.html" className="nav-link">
                 部门结构
               </a>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#用户">
+              <a href="user.html" className="nav-link">
                 用户
               </a>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#车型">
+              <a href="model.html" className="nav-link">
                 车型
               </a>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#车组">
+              <a href="train.html" className="nav-link">
                 车组
               </a>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#车次">
+              <a href="route.html" className="nav-link">
                 车次
               </a>
             </li>
@@ -80,7 +80,7 @@ export function DeptPicker({ caption, value, onChange }) {
 
   return (
     <div className="mb-3">
-      <label className="mb-3">{caption || '车间'}</label>
+      <label className="form-label">{caption || '车间'}</label>
       <select
         value={value}
         className="form-control"
@@ -97,7 +97,7 @@ export function DeptPicker({ caption, value, onChange }) {
 
 DeptPicker.propTypes = {
   caption: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
@@ -106,9 +106,9 @@ export function Dept2Picker({
 }) {
   return (
     <div className="mb-3">
-      <label className="mb-3">{caption || '班组'}</label>
+      <label className="form-label">{caption || '班组'}</label>
       <select
-        value={value || ''}
+        value={value}
         className="form-control"
         onChange={onChange}
       >
@@ -123,7 +123,7 @@ export function Dept2Picker({
 
 Dept2Picker.propTypes = {
   caption: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   dept2_list: PropTypes.array.isRequired,
 };
@@ -141,9 +141,9 @@ export function ModelPicker({ value, onChange }) {
 
   return (
     <div className="mb-3">
-      <label className="mb-3">车型</label>
+      <label className="form-label">车型</label>
       <select
-        value={value || '0'}
+        value={value}
         className="form-control"
         onChange={onChange}
       >
@@ -157,6 +157,6 @@ export function ModelPicker({ value, onChange }) {
 }
 
 ModelPicker.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
