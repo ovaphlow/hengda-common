@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import IconAdd from '../icon/Add';
 import IconList from '../icon/List';
-import ModelPicker from '../Component';
+import { ModelPicker } from '../Component';
 
 export default function Detail({ component_option }) {
   const { id } = useParams();
@@ -72,7 +72,7 @@ export default function Detail({ component_option }) {
   };
 
   return (
-    <>
+    <div>
       <h2>
         {component_option}
         {' '}
@@ -143,7 +143,7 @@ export default function Detail({ component_option }) {
             </button>
           </div>
 
-          <div className="btn-group pull-right">
+          <div className="btn-group float-right">
             {component_option === '编辑' && (
               <button
                 type="button"
@@ -162,7 +162,7 @@ export default function Detail({ component_option }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

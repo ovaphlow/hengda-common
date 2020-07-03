@@ -149,7 +149,7 @@ export function ModelPicker({ value, onChange }) {
       >
         <option value="0">未选择</option>
         {data.map((it) => (
-          <option value={it.id} key={it.id}>{it.v}</option>
+          <option key={it.id} value={it.id}>{it.v}</option>
         ))}
       </select>
     </div>
