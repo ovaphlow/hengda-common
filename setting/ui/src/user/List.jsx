@@ -41,6 +41,7 @@ export default function List() {
       <div className="card shadow mt-2">
         <div className="card-body table-responsive">
           <table className="table">
+            <caption>用户</caption>
             <thead>
               <tr>
                 <th className="text-right">序号</th>

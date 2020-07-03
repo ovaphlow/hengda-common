@@ -1,11 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Add() {
+export default function Add({
+  width, height, box_width, box_height,
+}) {
   return (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width={`${width}`}
+      height={`${height}`}
+      viewBox={`0 0 ${box_width} ${box_height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -24,3 +27,17 @@ export default function Add() {
     </svg>
   );
 }
+
+Add.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  box_width: PropTypes.string,
+  box_height: PropTypes.string,
+};
+
+Add.defaultProps = {
+  width: '24',
+  height: '24',
+  box_width: '24',
+  box_height: '24',
+};

@@ -41,6 +41,7 @@ export default function List() {
       <div className="card shadow mt-2">
         <div className="card-body">
           <table className="table">
+            <caption>车型</caption>
             <thead>
               <tr>
                 <th className="text-right">序号</th>
