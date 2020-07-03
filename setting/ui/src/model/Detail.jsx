@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import IconAdd from '../icon/Add';
 import IconList from '../icon/List';
 
 export default function Detail({ component_option }) {
@@ -77,23 +76,12 @@ export default function Detail({ component_option }) {
       </h2>
       <hr />
 
-      <div className="row">
-        <div className="col">
-          <a href="#/新增" className="btn btn-outline-success">
-            <IconAdd />
-            新增
-          </a>
-        </div>
+      <a href="#/" className="btn btn-outline-secondary float-right">
+        <IconList />
+        列表
+      </a>
 
-        <div className="col">
-          <div className="btn-group float-right">
-            <a href="#/" className="btn btn-outline-secondary">
-              <IconList />
-              列表
-            </a>
-          </div>
-        </div>
-      </div>
+      <div className="clearfix m-2" />
 
       <div className="card shadow mt-2">
         <div className="card-body">

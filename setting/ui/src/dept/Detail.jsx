@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Toolbar, TeamList } from './Component';
+import IconList from '../icon/List';
+import { TeamList } from './Component';
 
 export default function Detail({ component_option }) {
   const { id } = useParams();
@@ -76,7 +77,12 @@ export default function Detail({ component_option }) {
       </h1>
       <hr />
 
-      <Toolbar />
+      <a href="#/" className="btn btn-outline-secondary float-right">
+        <IconList />
+        列表
+      </a>
+
+      <div className="clearfix m-2" />
 
       <div className="card shadow mt-2">
         <div className="card-body">
