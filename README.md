@@ -1,23 +1,37 @@
 # hengda-common
 
-## 运行方法
+## setting 公共信息
 
-webapp
+### 运行
 
-    npm run start
+在 setting 目录下运行：
 
-common-server
+```shell
+npm run watch
+```
 
-    node server.js
+启动前端工程。
 
-## 部署方法
+运行：
 
-webapp下运行
+```shell
+npm run serve
+```
 
-    npm run build
+启动服务。
 
-后将生成的build目录中的文件复制到common-service下的public目录中
+### 部署
 
-在common-service目录下运行
+setting 目录下运行：
 
-        node server.js
+```shell
+npm run build
+```
+
+成功后，将 dispatcher，node_modules，public，package.json 复制到目标服务器中，运行
+
+```shell
+npm run serve
+```
+
+（需要Node.js环境）
