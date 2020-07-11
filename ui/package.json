@@ -1,0 +1,40 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "main": "index.html",
+  "author": "ovaphlow@live.com",
+  "license": "MIT",
+  "dependencies": {
+    "blueimp-md5": "^2.16.0",
+    "bootstrap": "^4.5.0",
+    "popper.js": "^1.16.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "uuid": "^8.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.7",
+    "parcel-bundler": "^1.12.4"
+  },
+  "scripts": {
+    "watch": "parcel watch *.html --public-url . --out-dir ../dispatcher/public/setting",
+    "build": "parcel build *.html --public-url . --out-dir ../dispatcher/public/setting",
+    "lint": "./node_modules/.bin/eslint --fix ./src"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%"
+    ],
+    "development": [
+      ">0.2%",
+      "last 3 versions"
+    ]
+  }
+}

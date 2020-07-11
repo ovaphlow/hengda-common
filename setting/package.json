@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "watch": "parcel watch ui/*.html --out-dir public",
+    "watch": "parcel watch ui/*.html --public-url . --out-dir ../public/setting",
     "build": "parcel build ui/*.html --out-dir public",
     "serve": "node dispatcher/server.js"
   },
@@ -38,7 +38,6 @@
     "parcel-bundler": "^1.12.4"
   },
   "browserslist": [
-    "last 1 chrome version",
-    "last 1 firefox version"
+    "last 3 versions"
   ]
 }
