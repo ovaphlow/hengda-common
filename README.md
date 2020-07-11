@@ -1,6 +1,8 @@
-# hengda-common
+# hengda-setting
 
 ## setting 公共信息
+
+铁路项目公用设置，包括部门、车型、车次、车组、用户。
 
 ### 运行
 
