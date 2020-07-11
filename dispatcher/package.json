@@ -1,0 +1,29 @@
+{
+  "name": "hengda-setting",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ovaphlow/hengda-setting.git",
+  "author": "ovaphlow <ovaphlow@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^9.3.1",
+    "bunyan": "^1.8.14",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.0",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0",
+    "pg": "^8.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  },
+  "scripts": {
+    "watch": "parcel watch ui/*.html --public-url . --out-dir public/setting",
+    "build": "parcel build ui/*.html --public-url . --out-dir public/setting",
+    "serve": "node index.js | ./node_modules/.bin/bunyan",
+    "lint": "./node_modules/.bin/eslint --fix ./*.js ./util/*.js"
+  }
+}
