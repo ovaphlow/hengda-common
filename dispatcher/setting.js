@@ -149,7 +149,7 @@ router.get('/user/', async (ctx) => {
 router.post('/user/', async (ctx) => {
   const client = await postgres.connect();
   try {
-    let sql = `
+    const sql = `
       insert into public.user
         (master_id, username, password, name, phone, remark, auth_super, position)
       values ($1, $2, $3, $4, $5, $6, 0, '')
@@ -163,13 +163,7 @@ router.post('/user/', async (ctx) => {
       ctx.request.body.phone,
       ctx.request.body.remark,
     ]);
-    sql = `
-      insert into cheliangduan.auth
-        (master_id, super)
-      values ($1, $2)
-    `;
-    await client.query(sql, [result.rows[0].id, ctx.request.body.super]);
-    ctx.response.body = { message: '', content: '' };
+    ctx.response.body = { message: '', content: result[0] };
   } catch (err) {
     logger.error(err.stack);
     ctx.response.body = { message: '服务器错误' };
