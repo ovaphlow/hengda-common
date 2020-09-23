@@ -1,7 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
+import { HashRouter, Switch, Route } from 'react-router-dom';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from './Home';
+
+function App() {
+  return (
+    <HashRouter>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </HashRouter>
+  );
+}
 
 ReactDOM.render(
   <React.StrictMode>
