@@ -7,3 +7,14 @@
 .workspace {
   flex: 1;
 }
+
+.page-title {
+  margin-bottom: 1rem;
+  background-color: #f0f8ff;
+  padding: 1rem 1rem 0;
+}
+
+.footer {
+  margin-top: 2rem;
+  padding: 1rem 1rem 1rem;
+}

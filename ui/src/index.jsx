@@ -5,17 +5,28 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './style.css';
+import Navbar from './Navbar';
 import Home from './Home';
 
 function App() {
   return (
-    <HashRouter>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </HashRouter>
+    <>
+      <header>
+        <Navbar />
+      </header>
+
+      <main className="workspace">
+        <HashRouter>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </HashRouter>
+      </main>
+
+      <footer>1123</footer>
+    </>
   );
 }
 

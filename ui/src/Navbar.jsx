@@ -8,7 +8,9 @@ export default function Navbar() {
           恒达交通
         </a>
 
-        <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
+        <div className="mr-auto" />
+
+        <ul className="navbar-nav">
           <li className="nav-item">
             <a className="nav-link" href="#">
               Home
