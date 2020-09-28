@@ -1,15 +1,19 @@
 import React from 'react';
 
+import Navbar from './Navbar';
+
 export default function Home() {
   return (
     <>
-      <header></header>
+      <header>
+        <Navbar />
+      </header>
 
-      <main>
+      <main className="workspace">
         <h1>HOME</h1>
       </main>
 
-      <footer></footer>
+      <footer>1123</footer>
     </>
   );
 }
