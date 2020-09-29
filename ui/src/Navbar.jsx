@@ -1,4 +1,11 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faHome,
+  faCogs,
+  faEnvelope,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   return (
@@ -12,13 +19,23 @@ export default function Navbar() {
 
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Home
+            <a className="nav-link" href="/">
+              <FontAwesomeIcon icon={faHome} fixedWidth />
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
+            <a className="nav-link" href="/setting">
+              <FontAwesomeIcon icon={faCogs} fixedWidth />
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/message">
+              <FontAwesomeIcon icon={faEnvelope} fixedWidth />
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/user">
+              <FontAwesomeIcon icon={faUserCircle} fixedWidth />
             </a>
           </li>
         </ul>
